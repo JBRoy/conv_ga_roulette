@@ -63,6 +63,86 @@ class GeneticAlgorithm:
     def initialize_population(self):
         self.population = [Architecture() for _ in range(self.population_size)]
     
+    def evaluate_fitness_weighted(self, architecture, train_loader, val_loader, device, epochs=100):
+        """Train and evaluate with weighted penalties for Conv and FC parameters"""
+        try:
+            model = CNN(architecture.genes).to(device)
+            criterion = nn.CrossEntropyLoss()
+            optimizer = AdamW(model.parameters(), lr=0.001)
+            
+            # Quick training
+            best_acc = 0
+            patience = 10
+            step = 1
+            best_epoch = 1
+            for epoch in range(1, epochs+1):
+                model.train()
+                for inputs, labels in train_loader:
+                    inputs, labels = inputs.to(device), labels.to(device)
+                    optimizer.zero_grad()
+                    outputs = model(inputs)
+                    loss = criterion(outputs, labels)
+                    loss.backward()
+                    optimizer.step()
+            
+                # Evaluation
+                model.eval()
+                correct = 0
+                with torch.no_grad():
+                    for inputs, labels in val_loader:
+                        inputs, labels = inputs.to(device), labels.to(device)
+                        outputs = model(inputs)
+                        _, predicted = torch.max(outputs.data, 1)
+                        correct += (predicted == labels).sum().item()
+            
+                accuracy = correct / len(val_loader.dataset)
+                if accuracy > best_acc:
+                    step = 0
+                    best_acc = accuracy
+                    best_epoch = epoch
+                else:
+                    step += 1
+                if step >= patience:
+                    break
+            
+            # Calculate separate penalties for Conv and FC layers
+            conv_params = 0
+            fc_params = 0
+            
+            # Count parameters in convolutional layers
+            for name, param in model.named_parameters():
+                if 'features' in name and 'weight' in name and len(param.shape) == 4:  # Conv2d weights
+                    conv_params += param.numel()
+                elif 'classifier' in name and 'weight' in name:  # FC weights
+                    fc_params += param.numel()
+            
+            # Weight factors (justified below)
+            conv_weight = 0.008  # Lower weight for conv params (more efficient)
+            fc_weight = 0.015    # Higher weight for FC params (less efficient)
+            
+            # Normalize by 1M parameters
+            conv_penalty = (conv_params / 1e6) * conv_weight
+            fc_penalty = (fc_params / 1e6) * fc_weight
+            total_penalty = conv_penalty + fc_penalty
+            
+            del model, inputs, outputs, labels
+            torch.cuda.empty_cache()
+            
+            # Fitness = accuracy - weighted penalty
+            architecture.accuracy = best_acc
+            architecture.best_epoch = best_epoch
+            architecture.fitness = best_acc - total_penalty
+            architecture.conv_params = conv_params
+            architecture.fc_params = fc_params
+            
+            return architecture.fitness
+            
+        except Exception as e:
+            print(f"Error evaluating architecture: {e}", flush=True)
+            architecture.fitness = 0
+            architecture.accuracy = 0
+            return 0
+    
     def evaluate_fitness(self, architecture, train_loader, val_loader, device, epochs=100):
         """Train and evaluate a single architecture"""
         try:
@@ -136,6 +216,39 @@ class GeneticAlgorithm:
             tournament = random.sample(self.population, tournament_size)
             winner = max(tournament, key=lambda x: x.fitness)
             selected.append(winner)
+        
+        return selected
+    
+    def roulette_selection(self):
+        """Roulette wheel selection based on relative fitness scores"""
+        selected = []
+        
+        # Calculate the minimum fitness to handle negative values
+        min_fitness = min(arch.fitness for arch in self.population)
+        
+        # Shift all fitness values to be positive
+        if min_fitness < 0:
+            shifted_fitness = [arch.fitness - min_fitness + 0.01 for arch in self.population]
+        else:
+            shifted_fitness = [arch.fitness + 0.01 for arch in self.population]  # Add small epsilon to avoid zero
+        
+        # Calculate total fitness
+        total_fitness = sum(shifted_fitness)
+        
+        # Calculate relative fitness (probabilities)
+        probabilities = [f / total_fitness for f in shifted_fitness]
+        
+        # Select individuals based on roulette wheel
+        for _ in range(self.population_size):
+            # Spin the wheel
+            r = random.random()
+            cumulative_probability = 0
+            
+            for i, prob in enumerate(probabilities):
+                cumulative_probability += prob
+                if r <= cumulative_probability:
+                    selected.append(deepcopy(self.population[i]))
+                    break
         
         return selected
     
@@ -225,7 +338,7 @@ class GeneticAlgorithm:
             # Evaluate fitness
             for i, arch in enumerate(self.population):
                 print(f"Evaluating architecture {i+1}/{self.population_size}...", end=' ', flush=True)
-                fitness = self.evaluate_fitness(arch, train_loader, val_loader, device)
+                fitness = self.evaluate_fitness_weighted(arch, train_loader, val_loader, device)
                 print(f"Fitness: {fitness:.4f}, Accuracy: {arch.accuracy:.4f}", flush=True)
             
             # Sort by fitness score
@@ -241,7 +354,7 @@ class GeneticAlgorithm:
             
             # Selection
             print(f"\nPerforming tournament selection of total population: {self.population_size} ...", flush=True)
-            selected = self.selection()
+            selected = self.roulette_selection()
             
             # Crossover and Mutation
             print(f"Performing Crossover & Mutation ...", flush=True)
