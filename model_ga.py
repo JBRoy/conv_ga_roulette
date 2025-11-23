@@ -63,7 +63,7 @@ class GeneticAlgorithm:
     def initialize_population(self):
         self.population = [Architecture() for _ in range(self.population_size)]
     
-    def evaluate_fitness_weighted(self, architecture, train_loader, val_loader, device, epochs=100):
+    def evaluate_fitness(self, architecture, train_loader, val_loader, device, epochs=100):
         """Train and evaluate with weighted penalties for Conv and FC parameters"""
         try:
             model = CNN(architecture.genes).to(device)
@@ -152,83 +152,83 @@ class GeneticAlgorithm:
             architecture.accuracy = 0
             return 0
     
-    def evaluate_fitness(self, architecture, train_loader, val_loader, device, epochs=100):
-        """Train and evaluate a single architecture"""
-        try:
-            model = CNN(architecture.genes).to(device)
-            criterion = nn.CrossEntropyLoss()
-            optimizer = AdamW(model.parameters(), lr=0.001)
-            
-            # Quick training
-            best_acc = 0
-            patience = 10
-            step = 1
-            best_epoch = 1
-            for epoch in range(1, epochs+1):
-                model.train()
-                for inputs, labels in train_loader:
-                    inputs, labels = inputs.to(device), labels.to(device)
-                    optimizer.zero_grad()
-                    outputs = model(inputs)
-                    loss = criterion(outputs, labels)
-                    loss.backward()
-                    optimizer.step()
-            
-                # Evaluation
-                model.eval()
-                correct = 0
-                # total = 0
-                with torch.no_grad():
-                    for inputs, labels in val_loader:
-                        inputs, labels = inputs.to(device), labels.to(device)
-                        outputs = model(inputs)
-                        _, predicted = torch.max(outputs.data, 1)
-                        # total += labels.size(0)
-                        correct += (predicted == labels).sum().item()
-            
-                accuracy = correct / len(val_loader.dataset)
-                if accuracy > best_acc:
-                    step = 0
-                    best_acc = accuracy
-                    best_epoch = epoch
-                else:
-                    step += 1
-                if step >= patience:
-                    break
-            
-            # Calculate model complexity penalty
-            num_params = sum(p.numel() for p in model.parameters())
-            complexity_penalty = num_params / 1e6  # Normalize
-
-            del model, inputs, outputs, labels
-            torch.cuda.empty_cache()
-            
-            # Fitness = accuracy - lambda * complexity
-            architecture.accuracy = best_acc
-            architecture.best_epoch = best_epoch
-            architecture.fitness = best_acc - 0.01 * complexity_penalty
-            
-            return architecture.fitness
-            
-        except Exception as e:
-            print(f"Error evaluating architecture: {e}", flush=True)
-            architecture.fitness = 0
-            architecture.accuracy = 0
-            return 0
+    # def evaluate_fitness(self, architecture, train_loader, val_loader, device, epochs=100):
+    #     """Train and evaluate a single architecture"""
+    #     try:
+    #         model = CNN(architecture.genes).to(device)
+    #         criterion = nn.CrossEntropyLoss()
+    #         optimizer = AdamW(model.parameters(), lr=0.001)
+    #
+    #         # Quick training
+    #         best_acc = 0
+    #         patience = 10
+    #         step = 1
+    #         best_epoch = 1
+    #         for epoch in range(1, epochs+1):
+    #             model.train()
+    #             for inputs, labels in train_loader:
+    #                 inputs, labels = inputs.to(device), labels.to(device)
+    #                 optimizer.zero_grad()
+    #                 outputs = model(inputs)
+    #                 loss = criterion(outputs, labels)
+    #                 loss.backward()
+    #                 optimizer.step()
+    #
+    #             # Evaluation
+    #             model.eval()
+    #             correct = 0
+    #             # total = 0
+    #             with torch.no_grad():
+    #                 for inputs, labels in val_loader:
+    #                     inputs, labels = inputs.to(device), labels.to(device)
+    #                     outputs = model(inputs)
+    #                     _, predicted = torch.max(outputs.data, 1)
+    #                     # total += labels.size(0)
+    #                     correct += (predicted == labels).sum().item()
+    #
+    #             accuracy = correct / len(val_loader.dataset)
+    #             if accuracy > best_acc:
+    #                 step = 0
+    #                 best_acc = accuracy
+    #                 best_epoch = epoch
+    #             else:
+    #                 step += 1
+    #             if step >= patience:
+    #                 break
+    #
+    #         # Calculate model complexity penalty
+    #         num_params = sum(p.numel() for p in model.parameters())
+    #         complexity_penalty = num_params / 1e6  # Normalize
+    #
+    #         del model, inputs, outputs, labels
+    #         torch.cuda.empty_cache()
+    #
+    #         # Fitness = accuracy - lambda * complexity
+    #         architecture.accuracy = best_acc
+    #         architecture.best_epoch = best_epoch
+    #         architecture.fitness = best_acc - 0.01 * complexity_penalty
+    #
+    #         return architecture.fitness
+    #
+    #     except Exception as e:
+    #         print(f"Error evaluating architecture: {e}", flush=True)
+    #         architecture.fitness = 0
+    #         architecture.accuracy = 0
+    #         return 0
     
-    def selection(self):
-        """Tournament selection"""
-        tournament_size = 3
-        selected = []
-        
-        for _ in range(self.population_size):
-            tournament = random.sample(self.population, tournament_size)
-            winner = max(tournament, key=lambda x: x.fitness)
-            selected.append(winner)
-        
-        return selected
+    # def selection(self):
+    #     """Tournament selection"""
+    #     tournament_size = 3
+    #     selected = []
+    #
+    #     for _ in range(self.population_size):
+    #         tournament = random.sample(self.population, tournament_size)
+    #         winner = max(tournament, key=lambda x: x.fitness)
+    #         selected.append(winner)
+    #
+    #     return selected
 
-    def roulette_selection(self):
+    def selection(self):
         # 1. Handle Negative Fitness
         min_fitness = min(arch.fitness for arch in self.population)
         if min_fitness < 0:
@@ -353,7 +353,7 @@ class GeneticAlgorithm:
             # Evaluate fitness
             for i, arch in enumerate(self.population):
                 print(f"Evaluating architecture {i+1}/{self.population_size}...", end=' ', flush=True)
-                fitness = self.evaluate_fitness_weighted(arch, train_loader, val_loader, device)
+                fitness = self.evaluate_fitness(arch, train_loader, val_loader, device)
                 print(f"Weighted Fitness: {fitness:.4f}, Accuracy: {arch.accuracy:.4f}", flush=True)
             
             # Sort by fitness score
@@ -369,7 +369,7 @@ class GeneticAlgorithm:
             
             # Selection
             print(f"\nPerforming Roulette Wheel selection of total population: {self.population_size} ...", flush=True)
-            selected = self.roulette_selection()
+            selected = self.selection()
             
             # Crossover and Mutation
             print(f"Performing Crossover & Mutation ...", flush=True)
