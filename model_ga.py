@@ -111,14 +111,21 @@ class GeneticAlgorithm:
             
             # Count parameters in convolutional layers
             for name, param in model.named_parameters():
-                if 'features' in name and 'weight' in name and len(param.shape) == 4:  # Conv2d weights
+                if 'features' in name: # and 'weight' in name and len(param.shape) == 4:   Conv2d weights
                     conv_params += param.numel()
-                elif 'classifier' in name and 'weight' in name:  # FC weights
+                elif 'classifier' in name: # and 'weight' in name:   FC weights
                     fc_params += param.numel()
-            
-            # Weight factors (justified below)
-            conv_weight = 0.008  # Lower weight for conv params (more efficient)
-            fc_weight = 0.015    # Higher weight for FC params (less efficient)
+
+            # --- TUNING PHASE LOGS ---
+            # [FINAL SELECTED CONFIG]
+            # Weights adjusted for "Computational Efficiency" justification
+            # Conv gets higher penalty because it consumes more Compute (FLOPs)
+            conv_weight = 0.02  # Higher weight (Optimizing for SPEED/FLOPs)
+            fc_weight = 0.005  # Lower weight
+
+            # [INITIAL REJECTED CONFIG]
+            # conv_weight = 0.008  # Lower weight for conv params (more efficient)
+            # fc_weight = 0.015    # Higher weight for FC params (less efficient)
             
             # Normalize by 1M parameters
             conv_penalty = (conv_params / 1e6) * conv_weight
@@ -134,7 +141,9 @@ class GeneticAlgorithm:
             architecture.fitness = best_acc - total_penalty
             architecture.conv_params = conv_params
             architecture.fc_params = fc_params
-            
+
+            print(f"    [Arch Details] Acc: {best_acc:.4f} | Conv Params: {conv_params} | FC Params: {fc_params} | Penalty: {total_penalty:.4f}",flush=True)
+
             return architecture.fitness
             
         except Exception as e:
@@ -218,38 +227,44 @@ class GeneticAlgorithm:
             selected.append(winner)
         
         return selected
-    
+
     def roulette_selection(self):
-        """Roulette wheel selection based on relative fitness scores"""
-        selected = []
-        
-        # Calculate the minimum fitness to handle negative values
+        # 1. Handle Negative Fitness
         min_fitness = min(arch.fitness for arch in self.population)
-        
-        # Shift all fitness values to be positive
         if min_fitness < 0:
             shifted_fitness = [arch.fitness - min_fitness + 0.01 for arch in self.population]
         else:
-            shifted_fitness = [arch.fitness + 0.01 for arch in self.population]  # Add small epsilon to avoid zero
-        
-        # Calculate total fitness
+            shifted_fitness = [arch.fitness + 0.01 for arch in self.population]
+
         total_fitness = sum(shifted_fitness)
-        
-        # Calculate relative fitness (probabilities)
-        probabilities = [f / total_fitness for f in shifted_fitness]
-        
-        # Select individuals based on roulette wheel
+
+        # Avoid division by zero
+        if total_fitness == 0:
+            probabilities = [1.0 / len(self.population)] * len(self.population)
+        else:
+            probabilities = [f / total_fitness for f in shifted_fitness]
+
+        print("\n    [Roulette Probabilities]", flush=True)
+        for i, (arch, prob) in enumerate(zip(self.population, probabilities)):
+            print(f"    Arch {i}: Fitness={arch.fitness:.4f} -> Prob={prob:.4f}", flush=True)
+
+        selected = []
         for _ in range(self.population_size):
-            # Spin the wheel
             r = random.random()
             cumulative_probability = 0
-            
+            selection_made = False
+
             for i, prob in enumerate(probabilities):
                 cumulative_probability += prob
                 if r <= cumulative_probability:
                     selected.append(deepcopy(self.population[i]))
+                    selection_made = True
                     break
-        
+
+            # SAFETY FALLBACK: If floating point error caused no selection, pick the last one
+            if not selection_made:
+                selected.append(deepcopy(self.population[-1]))
+
         return selected
     
     def crossover(self, parent1, parent2):
@@ -339,7 +354,7 @@ class GeneticAlgorithm:
             for i, arch in enumerate(self.population):
                 print(f"Evaluating architecture {i+1}/{self.population_size}...", end=' ', flush=True)
                 fitness = self.evaluate_fitness_weighted(arch, train_loader, val_loader, device)
-                print(f"Fitness: {fitness:.4f}, Accuracy: {arch.accuracy:.4f}", flush=True)
+                print(f"Weighted Fitness: {fitness:.4f}, Accuracy: {arch.accuracy:.4f}", flush=True)
             
             # Sort by fitness score
             print(f"\nSorting population in terms of fitness score (high -> low) ...", flush=True)
@@ -353,7 +368,7 @@ class GeneticAlgorithm:
             print(f"Best overall: {self.best_architecture}", flush=True)
             
             # Selection
-            print(f"\nPerforming tournament selection of total population: {self.population_size} ...", flush=True)
+            print(f"\nPerforming Roulette Wheel selection of total population: {self.population_size} ...", flush=True)
             selected = self.roulette_selection()
             
             # Crossover and Mutation

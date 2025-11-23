@@ -1,0 +1,267 @@
+Using device: cpu
+Starting with 10 Population:
+[Arch(conv=4, acc=0.0000), Arch(conv=1, acc=0.0000), Arch(conv=2, acc=0.0000), Arch(conv=3, acc=0.0000), Arch(conv=3, acc=0.0000), Arch(conv=1, acc=0.0000), Arch(conv=3, acc=0.0000), Arch(conv=4, acc=0.0000), Arch(conv=2, acc=0.0000), Arch(conv=3, acc=0.0000)]
+
+
+============================================================
+Generation 1/5
+============================================================
+Evaluating architecture 1/10...     [Arch Details] Acc: 0.4500 | Conv Params: 513920 | FC Params: 2099978 | Penalty: 0.0208
+Weighted Fitness: 0.4292, Accuracy: 0.4500
+Evaluating architecture 2/10...     [Arch Details] Acc: 0.4200 | Conv Params: 4800 | FC Params: 4199946 | Penalty: 0.0211
+Weighted Fitness: 0.3989, Accuracy: 0.4200
+Evaluating architecture 3/10...     [Arch Details] Acc: 0.4400 | Conv Params: 26432 | FC Params: 525002 | Penalty: 0.0032
+Weighted Fitness: 0.4368, Accuracy: 0.4400
+Evaluating architecture 4/10...     [Arch Details] Acc: 0.3000 | Conv Params: 32992 | FC Params: 529930 | Penalty: 0.0033
+Weighted Fitness: 0.2967, Accuracy: 0.3000
+Evaluating architecture 5/10...     [Arch Details] Acc: 0.2900 | Conv Params: 114688 | FC Params: 1051402 | Penalty: 0.0076
+Weighted Fitness: 0.2824, Accuracy: 0.2900
+Evaluating architecture 6/10...     [Arch Details] Acc: 0.3400 | Conv Params: 4992 | FC Params: 2098570 | Penalty: 0.0106
+Weighted Fitness: 0.3294, Accuracy: 0.3400
+Evaluating architecture 7/10...     [Arch Details] Acc: 0.4500 | Conv Params: 153216 | FC Params: 263562 | Penalty: 0.0044
+Weighted Fitness: 0.4456, Accuracy: 0.4500
+Evaluating architecture 8/10...     [Arch Details] Acc: 0.3400 | Conv Params: 274560 | FC Params: 1054218 | Penalty: 0.0108
+Weighted Fitness: 0.3292, Accuracy: 0.3400
+Evaluating architecture 9/10...     [Arch Details] Acc: 0.4900 | Conv Params: 411584 | FC Params: 1049290 | Penalty: 0.0135
+Weighted Fitness: 0.4765, Accuracy: 0.4900
+Evaluating architecture 10/10...     [Arch Details] Acc: 0.5000 | Conv Params: 119600 | FC Params: 1049994 | Penalty: 0.0076
+Weighted Fitness: 0.4924, Accuracy: 0.5000
+
+Sorting population in terms of fitness score (high -> low) ...
+Best in generation: Arch(conv=3, acc=0.5000)
+
+Best overall: Arch(conv=3, acc=0.5000)
+
+Performing Roulette Wheel selection of total population: 10 ...
+
+    [Roulette Probabilities]
+    Arch 0: Fitness=0.4924 -> Prob=0.1251
+    Arch 1: Fitness=0.4765 -> Prob=0.1211
+    Arch 2: Fitness=0.4456 -> Prob=0.1134
+    Arch 3: Fitness=0.4368 -> Prob=0.1112
+    Arch 4: Fitness=0.4292 -> Prob=0.1093
+    Arch 5: Fitness=0.3989 -> Prob=0.1018
+    Arch 6: Fitness=0.3294 -> Prob=0.0845
+    Arch 7: Fitness=0.3292 -> Prob=0.0844
+    Arch 8: Fitness=0.2967 -> Prob=0.0763
+    Arch 9: Fitness=0.2824 -> Prob=0.0728
+Performing Crossover & Mutation ...
+Elitism: Keeping top 2 architectures in next generation.
+Next Generation: [Arch(conv=3, acc=0.5000), Arch(conv=2, acc=0.4900), Arch(conv=2, acc=0.0000), Arch(conv=3, acc=0.0000), Arch(conv=2, acc=0.4400), Arch(conv=3, acc=0.5000), Arch(conv=1, acc=0.0000), Arch(conv=2, acc=0.0000), Arch(conv=2, acc=0.0000), Arch(conv=1, acc=0.0000)]
+
+============================================================
+Generation 2/5
+============================================================
+Evaluating architecture 1/10...     [Arch Details] Acc: 0.2900 | Conv Params: 119600 | FC Params: 1049994 | Penalty: 0.0076
+Weighted Fitness: 0.2824, Accuracy: 0.2900
+Evaluating architecture 2/10...     [Arch Details] Acc: 0.4400 | Conv Params: 411584 | FC Params: 1049290 | Penalty: 0.0135
+Weighted Fitness: 0.4265, Accuracy: 0.4400
+Evaluating architecture 3/10...     [Arch Details] Acc: 0.4100 | Conv Params: 30640 | FC Params: 2102794 | Penalty: 0.0111
+Weighted Fitness: 0.3989, Accuracy: 0.4100
+Evaluating architecture 4/10...     [Arch Details] Acc: 0.5200 | Conv Params: 35744 | FC Params: 131786 | Penalty: 0.0014
+Weighted Fitness: 0.5186, Accuracy: 0.5200
+Evaluating architecture 5/10...     [Arch Details] Acc: 0.4800 | Conv Params: 26432 | FC Params: 525002 | Penalty: 0.0032
+Weighted Fitness: 0.4768, Accuracy: 0.4800
+Evaluating architecture 6/10...     [Arch Details] Acc: 0.4700 | Conv Params: 119600 | FC Params: 1049994 | Penalty: 0.0076
+Weighted Fitness: 0.4624, Accuracy: 0.4700
+Evaluating architecture 7/10...     [Arch Details] Acc: 0.3500 | Conv Params: 4992 | FC Params: 2098570 | Penalty: 0.0106
+Weighted Fitness: 0.3394, Accuracy: 0.3500
+Evaluating architecture 8/10...     [Arch Details] Acc: 0.3800 | Conv Params: 411584 | FC Params: 1049290 | Penalty: 0.0135
+Weighted Fitness: 0.3665, Accuracy: 0.3800
+Evaluating architecture 9/10...     [Arch Details] Acc: 0.4000 | Conv Params: 411584 | FC Params: 1049290 | Penalty: 0.0135
+Weighted Fitness: 0.3865, Accuracy: 0.4000
+Evaluating architecture 10/10...     [Arch Details] Acc: 0.3900 | Conv Params: 4992 | FC Params: 2098570 | Penalty: 0.0106
+Weighted Fitness: 0.3794, Accuracy: 0.3900
+
+Sorting population in terms of fitness score (high -> low) ...
+Best in generation: Arch(conv=3, acc=0.5200)
+
+Best overall: Arch(conv=3, acc=0.5200)
+
+Performing Roulette Wheel selection of total population: 10 ...
+
+    [Roulette Probabilities]
+    Arch 0: Fitness=0.5186 -> Prob=0.1278
+    Arch 1: Fitness=0.4768 -> Prob=0.1177
+    Arch 2: Fitness=0.4624 -> Prob=0.1142
+    Arch 3: Fitness=0.4265 -> Prob=0.1055
+    Arch 4: Fitness=0.3989 -> Prob=0.0988
+    Arch 5: Fitness=0.3865 -> Prob=0.0958
+    Arch 6: Fitness=0.3794 -> Prob=0.0941
+    Arch 7: Fitness=0.3665 -> Prob=0.0910
+    Arch 8: Fitness=0.3394 -> Prob=0.0845
+    Arch 9: Fitness=0.2824 -> Prob=0.0707
+Performing Crossover & Mutation ...
+Elitism: Keeping top 2 architectures in next generation.
+Next Generation: [Arch(conv=3, acc=0.5200), Arch(conv=2, acc=0.4800), Arch(conv=2, acc=0.0000), Arch(conv=2, acc=0.0000), Arch(conv=2, acc=0.0000), Arch(conv=2, acc=0.0000), Arch(conv=2, acc=0.0000), Arch(conv=1, acc=0.0000), Arch(conv=2, acc=0.0000), Arch(conv=2, acc=0.0000)]
+
+============================================================
+Generation 3/5
+============================================================
+Evaluating architecture 1/10...     [Arch Details] Acc: 0.4900 | Conv Params: 35744 | FC Params: 131786 | Penalty: 0.0014
+Weighted Fitness: 0.4886, Accuracy: 0.4900
+Evaluating architecture 2/10...     [Arch Details] Acc: 0.4100 | Conv Params: 26432 | FC Params: 525002 | Penalty: 0.0032
+Weighted Fitness: 0.4068, Accuracy: 0.4100
+Evaluating architecture 3/10...     [Arch Details] Acc: 0.3500 | Conv Params: 30640 | FC Params: 2102794 | Penalty: 0.0111
+Weighted Fitness: 0.3389, Accuracy: 0.3500
+Evaluating architecture 4/10...     [Arch Details] Acc: 0.3300 | Conv Params: 26432 | FC Params: 525002 | Penalty: 0.0032
+Weighted Fitness: 0.3268, Accuracy: 0.3300
+Evaluating architecture 5/10...     [Arch Details] Acc: 0.4300 | Conv Params: 411584 | FC Params: 1049290 | Penalty: 0.0135
+Weighted Fitness: 0.4165, Accuracy: 0.4300
+Evaluating architecture 6/10...     [Arch Details] Acc: 0.4500 | Conv Params: 411584 | FC Params: 1049290 | Penalty: 0.0135
+Weighted Fitness: 0.4365, Accuracy: 0.4500
+Evaluating architecture 7/10...     [Arch Details] Acc: 0.3400 | Conv Params: 411584 | FC Params: 1049290 | Penalty: 0.0135
+Weighted Fitness: 0.3265, Accuracy: 0.3400
+Evaluating architecture 8/10...     [Arch Details] Acc: 0.3700 | Conv Params: 1248 | FC Params: 262858 | Penalty: 0.0013
+Weighted Fitness: 0.3687, Accuracy: 0.3700
+Evaluating architecture 9/10...     [Arch Details] Acc: 0.3700 | Conv Params: 30640 | FC Params: 2102794 | Penalty: 0.0111
+Weighted Fitness: 0.3589, Accuracy: 0.3700
+Evaluating architecture 10/10...     [Arch Details] Acc: 0.3800 | Conv Params: 30640 | FC Params: 2102794 | Penalty: 0.0111
+Weighted Fitness: 0.3689, Accuracy: 0.3800
+
+Sorting population in terms of fitness score (high -> low) ...
+Best in generation: Arch(conv=3, acc=0.4900)
+
+Best overall: Arch(conv=3, acc=0.5200)
+
+Performing Roulette Wheel selection of total population: 10 ...
+
+    [Roulette Probabilities]
+    Arch 0: Fitness=0.4886 -> Prob=0.1266
+    Arch 1: Fitness=0.4365 -> Prob=0.1134
+    Arch 2: Fitness=0.4165 -> Prob=0.1083
+    Arch 3: Fitness=0.4068 -> Prob=0.1059
+    Arch 4: Fitness=0.3689 -> Prob=0.0962
+    Arch 5: Fitness=0.3687 -> Prob=0.0962
+    Arch 6: Fitness=0.3589 -> Prob=0.0937
+    Arch 7: Fitness=0.3389 -> Prob=0.0886
+    Arch 8: Fitness=0.3268 -> Prob=0.0856
+    Arch 9: Fitness=0.3265 -> Prob=0.0855
+Performing Crossover & Mutation ...
+Elitism: Keeping top 2 architectures in next generation.
+Next Generation: [Arch(conv=3, acc=0.4900), Arch(conv=2, acc=0.4500), Arch(conv=2, acc=0.0000), Arch(conv=2, acc=0.0000), Arch(conv=2, acc=0.0000), Arch(conv=2, acc=0.0000), Arch(conv=2, acc=0.0000), Arch(conv=2, acc=0.0000), Arch(conv=2, acc=0.3800), Arch(conv=2, acc=0.0000)]
+
+============================================================
+Generation 4/5
+============================================================
+Evaluating architecture 1/10...     [Arch Details] Acc: 0.2400 | Conv Params: 35744 | FC Params: 131786 | Penalty: 0.0014
+Weighted Fitness: 0.2386, Accuracy: 0.2400
+Evaluating architecture 2/10...     [Arch Details] Acc: 0.3300 | Conv Params: 411584 | FC Params: 1049290 | Penalty: 0.0135
+Weighted Fitness: 0.3165, Accuracy: 0.3300
+Evaluating architecture 3/10...     [Arch Details] Acc: 0.3400 | Conv Params: 26432 | FC Params: 525002 | Penalty: 0.0032
+Weighted Fitness: 0.3368, Accuracy: 0.3400
+Evaluating architecture 4/10...     [Arch Details] Acc: 0.3900 | Conv Params: 30640 | FC Params: 2102794 | Penalty: 0.0111
+Weighted Fitness: 0.3789, Accuracy: 0.3900
+Evaluating architecture 5/10...     [Arch Details] Acc: 0.3500 | Conv Params: 30640 | FC Params: 2102794 | Penalty: 0.0111
+Weighted Fitness: 0.3389, Accuracy: 0.3500
+Evaluating architecture 6/10...     [Arch Details] Acc: 0.4700 | Conv Params: 30640 | FC Params: 2102794 | Penalty: 0.0111
+Weighted Fitness: 0.4589, Accuracy: 0.4700
+Evaluating architecture 7/10...     [Arch Details] Acc: 0.3900 | Conv Params: 30640 | FC Params: 2102794 | Penalty: 0.0111
+Weighted Fitness: 0.3789, Accuracy: 0.3900
+Evaluating architecture 8/10...     [Arch Details] Acc: 0.2600 | Conv Params: 52832 | FC Params: 2097866 | Penalty: 0.0115
+Weighted Fitness: 0.2485, Accuracy: 0.2600
+Evaluating architecture 9/10...     [Arch Details] Acc: 0.4400 | Conv Params: 30640 | FC Params: 2102794 | Penalty: 0.0111
+Weighted Fitness: 0.4289, Accuracy: 0.4400
+Evaluating architecture 10/10...     [Arch Details] Acc: 0.4200 | Conv Params: 26432 | FC Params: 525002 | Penalty: 0.0032
+Weighted Fitness: 0.4168, Accuracy: 0.4200
+
+Sorting population in terms of fitness score (high -> low) ...
+Best in generation: Arch(conv=2, acc=0.4700)
+
+Best overall: Arch(conv=3, acc=0.5200)
+
+Performing Roulette Wheel selection of total population: 10 ...
+
+    [Roulette Probabilities]
+    Arch 0: Fitness=0.4589 -> Prob=0.1288
+    Arch 1: Fitness=0.4289 -> Prob=0.1205
+    Arch 2: Fitness=0.4168 -> Prob=0.1172
+    Arch 3: Fitness=0.3789 -> Prob=0.1068
+    Arch 4: Fitness=0.3789 -> Prob=0.1068
+    Arch 5: Fitness=0.3389 -> Prob=0.0958
+    Arch 6: Fitness=0.3368 -> Prob=0.0952
+    Arch 7: Fitness=0.3165 -> Prob=0.0897
+    Arch 8: Fitness=0.2485 -> Prob=0.0710
+    Arch 9: Fitness=0.2386 -> Prob=0.0683
+Performing Crossover & Mutation ...
+Elitism: Keeping top 2 architectures in next generation.
+Next Generation: [Arch(conv=2, acc=0.4700), Arch(conv=2, acc=0.4400), Arch(conv=2, acc=0.0000), Arch(conv=2, acc=0.0000), Arch(conv=2, acc=0.0000), Arch(conv=2, acc=0.0000), Arch(conv=2, acc=0.0000), Arch(conv=2, acc=0.0000), Arch(conv=2, acc=0.0000), Arch(conv=2, acc=0.0000)]
+
+============================================================
+Generation 5/5
+============================================================
+Evaluating architecture 1/10...     [Arch Details] Acc: 0.3900 | Conv Params: 30640 | FC Params: 2102794 | Penalty: 0.0111
+Weighted Fitness: 0.3789, Accuracy: 0.3900
+Evaluating architecture 2/10...     [Arch Details] Acc: 0.3500 | Conv Params: 30640 | FC Params: 2102794 | Penalty: 0.0111
+Weighted Fitness: 0.3389, Accuracy: 0.3500
+Evaluating architecture 3/10...     [Arch Details] Acc: 0.4200 | Conv Params: 30640 | FC Params: 2102794 | Penalty: 0.0111
+Weighted Fitness: 0.4089, Accuracy: 0.4200
+Evaluating architecture 4/10...     [Arch Details] Acc: 0.4800 | Conv Params: 30640 | FC Params: 2102794 | Penalty: 0.0111
+Weighted Fitness: 0.4689, Accuracy: 0.4800
+Evaluating architecture 5/10...     [Arch Details] Acc: 0.3500 | Conv Params: 411584 | FC Params: 1049290 | Penalty: 0.0135
+Weighted Fitness: 0.3365, Accuracy: 0.3500
+Evaluating architecture 6/10...     [Arch Details] Acc: 0.3500 | Conv Params: 30640 | FC Params: 2102794 | Penalty: 0.0111
+Weighted Fitness: 0.3389, Accuracy: 0.3500
+Evaluating architecture 7/10...     [Arch Details] Acc: 0.3800 | Conv Params: 30640 | FC Params: 2102794 | Penalty: 0.0111
+Weighted Fitness: 0.3689, Accuracy: 0.3800
+Evaluating architecture 8/10...     [Arch Details] Acc: 0.4200 | Conv Params: 26432 | FC Params: 525002 | Penalty: 0.0032
+Weighted Fitness: 0.4168, Accuracy: 0.4200
+Evaluating architecture 9/10...     [Arch Details] Acc: 0.4700 | Conv Params: 30640 | FC Params: 2102794 | Penalty: 0.0111
+Weighted Fitness: 0.4589, Accuracy: 0.4700
+Evaluating architecture 10/10...     [Arch Details] Acc: 0.4200 | Conv Params: 30640 | FC Params: 2102794 | Penalty: 0.0111
+Weighted Fitness: 0.4089, Accuracy: 0.4200
+
+Sorting population in terms of fitness score (high -> low) ...
+Best in generation: Arch(conv=2, acc=0.4800)
+
+Best overall: Arch(conv=3, acc=0.5200)
+
+Performing Roulette Wheel selection of total population: 10 ...
+
+    [Roulette Probabilities]
+    Arch 0: Fitness=0.4689 -> Prob=0.1190
+    Arch 1: Fitness=0.4589 -> Prob=0.1165
+    Arch 2: Fitness=0.4168 -> Prob=0.1061
+    Arch 3: Fitness=0.4089 -> Prob=0.1041
+    Arch 4: Fitness=0.4089 -> Prob=0.1041
+    Arch 5: Fitness=0.3789 -> Prob=0.0966
+    Arch 6: Fitness=0.3689 -> Prob=0.0941
+    Arch 7: Fitness=0.3389 -> Prob=0.0867
+    Arch 8: Fitness=0.3389 -> Prob=0.0867
+    Arch 9: Fitness=0.3365 -> Prob=0.0861
+Performing Crossover & Mutation ...
+Elitism: Keeping top 2 architectures in next generation.
+Next Generation: [Arch(conv=2, acc=0.4800), Arch(conv=2, acc=0.4700), Arch(conv=2, acc=0.0000), Arch(conv=3, acc=0.0000), Arch(conv=2, acc=0.0000), Arch(conv=2, acc=0.0000), Arch(conv=2, acc=0.0000), Arch(conv=2, acc=0.0000), Arch(conv=2, acc=0.3900), Arch(conv=2, acc=0.0000)]
+
+============================================================
+FINAL BEST ARCHITECTURE
+============================================================
+Genes: {'num_conv': 3, 'conv_configs': [{'filters': 16, 'kernel_size': 5}, {'filters': 32, 'kernel_size': 7}, {'filters': 32, 'kernel_size': 3}], 'pool_type': 'avg', 'activation': 'relu', 'fc_units': 64}
+Accuracy: 0.5200
+Fitness: 0.5186
+
+Total parameters: 167,530
+
+Model architecture:
+CNN(
+  (features): Sequential(
+    (0): Conv2d(3, 16, kernel_size=(5, 5), stride=(1, 1), padding=(2, 2))
+    (1): BatchNorm2d(16, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (2): ReLU(inplace=True)
+    (3): Conv2d(16, 32, kernel_size=(7, 7), stride=(1, 1), padding=(3, 3))
+    (4): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (5): ReLU(inplace=True)
+    (6): AvgPool2d(kernel_size=2, stride=2, padding=0)
+    (7): Conv2d(32, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (8): BatchNorm2d(32, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (9): ReLU(inplace=True)
+    (10): AvgPool2d(kernel_size=2, stride=2, padding=0)
+  )
+  (classifier): Sequential(
+    (0): Flatten(start_dim=1, end_dim=-1)
+    (1): Linear(in_features=2048, out_features=64, bias=True)
+    (2): ReLU(inplace=True)
+    (3): Dropout(p=0.5, inplace=False)
+    (4): Linear(in_features=64, out_features=10, bias=True)
+  )
+)
