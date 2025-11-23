@@ -111,9 +111,9 @@ class GeneticAlgorithm:
             
             # Count parameters in convolutional layers
             for name, param in model.named_parameters():
-                if 'features' in name: # and 'weight' in name and len(param.shape) == 4:   Conv2d weights
+                if 'features' in name:
                     conv_params += param.numel()
-                elif 'classifier' in name: # and 'weight' in name:   FC weights
+                elif 'classifier' in name:
                     fc_params += param.numel()
 
             # --- TUNING PHASE LOGS ---
